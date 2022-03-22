@@ -1,0 +1,211 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+	</head>
+
+	<body>
+	
+		<div class='col-2 border m-5 ' id='draggable'>
+			<button type="button" class="btn btn-lg-primary-">Sort</button>
+		</div>
+		<table class='table  table-striped' id='myTable'>
+			<thead class='table-info'>
+				<tr>
+					<td width='50%'>
+						<a onclick="sortTable(0, 'string')">
+							<button class='btn btn-outline-light text-dark '>
+								Name
+							</button>
+						</a>
+						
+					</td>
+					<td width='25%' class='text-right'>
+						<a onclick="sortTable(1, 'int')">
+							
+							<button class='btn btn-outline-light text-dark'>
+								Größe [KM^2]
+							</button>
+						</a>
+					</td>
+					<td width='12.5%' class='text-right'>
+						<a onclick="sortTable(2, 'int')">
+							<button class='btn btn-outline-light text-dark'>
+								Einwohner
+							</button>
+						</a>
+					</td>
+
+					<td width='12.5%' class='text-right'>
+						<a onclick="sortTable(3, 'int')">
+							<button class='btn btn-outline-light text-dark'>
+								Obdachlose
+							</button>
+						</a>
+					</td>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr class=''>
+					<td class='align-middle'>
+						Düsseldorf
+					</td>
+					
+					<td class='align-middle text-right'>
+						150000 
+					</td>
+					
+					<td class='align-middle text-right'>
+						980000
+					</td>
+					<td class='align-middle text-right'>
+						50
+					</td>
+
+				</tr>
+				<tr>
+					<td class='align-middle'>
+						Köln
+					</td>
+					<td class='align-middle text-right'>
+						170000 
+					</td>
+					<td class='align-middle text-right'>
+						1200000
+					</td>
+					<td class='align-middle text-right'>
+						500
+					</td>
+				</tr>
+				<tr>
+					<td class='align-middle'>
+						Neuss
+					</td>
+					<td class='align-middle text-right'>
+						9800
+					</td>
+					<td class='align-middle text-right'>
+						125000
+					</td>
+					<td class='align-middle text-right'>
+						125001
+					</td>
+				</tr>
+				<tr>
+					<td class='align-middle'>
+						Berlin
+					</td>
+					<td class='align-middle text-right'>
+						15000
+					</td>
+					<td class='align-middle text-right'>
+						3500000
+					</td>
+					<td class='align-middle text-right'>
+						3490000
+					</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</body>
+</html>
+
+
+<script>
+	// Übergabe 0 = Name; 1 = Größe, 2 = Einwohner
+	function NameDerFunktion(parameter)
+	{	
+		alert(parameter);
+	}
+	//Platzhalter variable für Anzahl der Aufrufe
+	var Aufrufe = 0;
+
+	// Die Funktion holt einen Parameter und einen Wert als Übergabewert, welche den INHALT und den DATENTYP des Inhalts beinhalten.
+	// Wir setzen dann Funktionsextern eine Variable zum zählen der Funktionsaufrufe.
+	// Innerhalb der Funktion haben wir die variable table, rows, switching, i,x,y,shouldswitch, CompareX und CompareY
+	// Die Switching Variable dient um zu prüfen ob wir weiter Täusche innerhalb des Tables vornehmen müssen und wird by default von
+	// Funktion auf true gesetzt. Daraufhin geht unsere Funktion in eine SOLANG (while) Schleife, welche durch alle Reihen des Tables
+	// geht dann die Anzahl der Rows und startet bei der 2ten Row mit der Überprüfung der Inhalte da die erste zum 
+	// Darstellen des Headers gedacht ist. Dann speichern wir den Inhalt der aktuellen Row und der nächsten Row, entfernen überschüssige Leerzeichen, 
+	// und Überprüfen den Inhalt der Rows auf den Datentyp in, WENN die Row den Datentyp Int durch unsere Vordefinition beinhalten soll, dann
+	// wird der Inhalt dieser Spalten, welcher bei default ein String ist, in Integers umgewandelt welche dann auf ihre Größe verglichen werden und
+	// je nach Anzahl der Aufrufe bedingt getauscht werden (Aufsteigend beim 1,3,5,7....111 Aufruf und Absteigend beim 2,4,6,8,10...124 Aufruf) 
+	// 
+	
+	
+	function sortTable(parameter, wert) 
+	{
+		//Erhöht unseren Platzhalter bei jedem Aufruf um 1
+		Aufrufe++;
+	 	// Erstellt Variablen die Funktionsintern genutzt werden ++
+ 	 	var table, rows, switching, i, x, y, shouldSwitch, CompareX, CompareY;
+ 	 	// sucht das Element mit der ID ("mytable") und speichert dieses in table ++
+ 	 	table 		= document.getElementById("myTable");
+ 	 	switching 	= true;
+ 	 	// Erstelle Schleife die solange läuft bis keine Änderungen mehr vorgenommen werden können (Durch variable switching) ++
+ 	 	while (switching) 
+ 	 		{
+    		// Jeder Durchlauf startet, indem er sagt, dass kein Tausch (switching) vorgenommen wird ++
+    		switching 	= false;
+    		// War erst unklar:Speichert die Anzahl der Reihen unseres Tables in der variable 'row'
+    		rows 		= table.rows;
+    		// Geht durch alle Reihen außer der ersten, da diese nur die Headline darstellt (infos anzeigt)
+    		// Wenn wir uns in den folgenden Reihen befinden
+   			for (i = 1; i < (rows.length - 1); i++) 
+				{
+				// Setzt den Switch auf false (damit Default hergestellt ist)
+				shouldSwitch 	= false;
+				// Holt sich das aktuelle Element und das Element aus der nächsten Zeile
+				// WAS NACH DER KLAmmer kommt ist unklar
+				// Speichert das Element in der row[i] des column 'parameter' in x und trim entfernt überschüssige Leerzeichen an beiden Enden des Strings
+				CompareX		= rows[i].getElementsByTagName("TD")[parameter].innerHTML.trim();
+				// Speichert das element in der row[i+1] des column 'parameter' in y und trim entfernt überschüssige Leerzeichen an beiden Enden des Strings
+				CompareY		= rows[i + 1].getElementsByTagName("TD")[parameter].innerHTML.trim();
+				//WENN Inhalt von Wert == Int DANN
+				if (wert == 'int')
+					{
+					// Parste to int
+					CompareX = parseInt(CompareX);
+					CompareY = parseInt(CompareY);
+					}
+				//Überprüfe ob wir uns in einem durch 2 teilbaren Aufruf befinden um festzustellen ob wir Auf- oder Absteigend sortieren wollen
+				if (Aufrufe % 2 == 0)
+					{
+					//Wenn CompareX KLEINER IST als Compare Y DANN
+					if (CompareX > CompareY)				
+					{
+						// Wenn das Xte (vordere)Element Größer ist als das Yte(darauf folgendes Element) wird shouldSwitch auf True gesetzt und der Durchlauf beendet.
+						shouldSwitch = true;
+						// Beendet die if-abfrage geht im Code weiter
+					break;
+					}
+				}
+					//Ansonsten
+					else
+					{
+					//Überprüfe ob der Inhalt von CompareY größer ist als der Inhalt von Compare X
+					if (CompareX < CompareY)				
+						{
+						// Wenn das Xte (vordere)Element Größer ist als das Yte(darauf folgendes Element) wird shouldSwitch auf True gesetzt und der Durchlauf beendet.
+						shouldSwitch = true;
+						// Beendet die if-abfrage geht im Code weiter
+						break;
+						}
+					}
+				}
+				// Wenn shouldSwitch in vorheriger Überprüfung auf "true") gesetzt wurde DANN
+				if (shouldSwitch)
+					{
+					// Tausche die Position der Elemente und setzte ShouldSwitch auf True für weitere Durchläufe
+					rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+					switching = true;
+					}
+		}
+	}
+</script>
+
